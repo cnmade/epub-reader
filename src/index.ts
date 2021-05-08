@@ -22,7 +22,7 @@ const createWindow = (): void => {
        webSecurity: false//是否禁用同源策略(上线删除)
     },
     height: 860,
-    width: 1200,
+    width: 1200
   });
 
   mainWindow.removeMenu();
@@ -30,7 +30,7 @@ const createWindow = (): void => {
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY + "?args=" + deeplinkingUrl);
 
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 };
 
 

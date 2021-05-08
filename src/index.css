@@ -100,6 +100,43 @@ body {
   }
 }
 
+
+#catalog {
+  background-color: #CFE;
+  position: absolute;
+  float: left;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  padding: 10px auto;
+  width: 20px;
+  height: 20px;
+  overflow: auto;
+}
+
+.catalog-item-0 {
+  font-weight: 1000;
+}
+.catalog-item-1 {
+  font-weight: 500;
+  padding-left: 24px;
+}
+.catalog-item-2 {
+  padding-left: 48px;
+}
+.catalog-item-3 {
+  padding-left: 72px;
+}
+.catalog-item-4 {
+  padding-left: 96px;
+}
+.catalog-item-5 {
+  padding-left: 120px;
+}
+#catalog > p {
+  margin-left:10px;
+}
+
 .arrow {
   position: fixed;
   top: 50%;

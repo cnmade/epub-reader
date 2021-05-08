@@ -78,6 +78,7 @@
     "@electron-forge/maker-zip": "^6.0.0-beta.54",
     "@electron-forge/plugin-webpack": "6.0.0-beta.54",
     "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
+    "@types/jquery": "^3.5.5",
     "@typescript-eslint/eslint-plugin": "^4.0.1",
     "@typescript-eslint/parser": "^4.0.1",
     "css-loader": "^4.2.1",
@@ -94,6 +95,7 @@
     "electron-log": "^4.3.5",
     "electron-squirrel-startup": "^1.0.0",
     "epubjs": "^0.3.88",
+    "jquery": "^3.6.0",
     "jszip": "^3.6.0"
   }
 }

@@ -28,9 +28,14 @@
 
 import './index.css';
 
+import jQuery from 'jquery';
 console.log('👋 This message is being logged by "renderer.js", included via webpack');
-import ePub, { Rendition } from 'epubjs';
+import ePub, { NavItem, Rendition } from 'epubjs';
 import { app, ipcRenderer } from 'electron';
+
+
+//jQuery 无冲突
+jQuery.noConflict();
 
 function getSearchParameters() {
   var prmstr = window.location.search.substr(1);
@@ -54,6 +59,13 @@ var params = getSearchParameters();
 var sm = params.get("args");
 console.log("args:" + JSON.stringify(sm));
 
+if (sm == "" || sm == ".") {
+  //dev
+  sm = "file:///./rust.epub";
+  //prod
+  // sm = "";
+}
+
 
 
 
@@ -74,8 +86,16 @@ if (sm == "") {
 
 
 
+  //菜单
 
+  var tocDiv = document.getElementById("catalog");
+  tocDiv.addEventListener("mouseenter", () => {
+    jQuery("#catalog").width("300").height("800").css("overflow", "auto");
 
+  });
+  tocDiv.addEventListener("mouseleave", () => {
+    jQuery("#catalog").width("25").height("25").css("overflow", "hidden");
+  });
 
   book.ready.then(() => {
 
@@ -116,26 +136,55 @@ if (sm == "") {
 
   var title = document.getElementById("title");
 
- /*  rendition.on("rendered", function (section: { href: string; }) {
+
+
+  var recursionHandle = function (toc: NavItem[], doc: string[], i: number) {
+    toc.forEach(function (chapter: NavItem) {
+      doc.push('<p class="catalog-item catalog-item-' + i + '" data-catalog="' + chapter.href + '">' + chapter.label + '</p>')
+      if (chapter.subitems && chapter.subitems.length) {
+        i++
+        recursionHandle(chapter.subitems, doc, i)
+        i > 0 && i--
+      }
+    })
+
+    return doc
+  }
+
+  rendition.on("rendered", function (section: { href: string; }) {
     var current = book.navigation && book.navigation.get(section.href);
+    book.loaded.navigation.then(function (toc) {
 
-    if (current) {
-      var $select = document.getElementById("toc");
-      var $selected = $select.querySelector("option[selected]");
-      if ($selected) {
-        $selected.removeAttribute("selected");
-      }
+      // 方式一 toc是一个多维数组，下面这种只能显示第一级的目录
 
-      var $options = $select.querySelectorAll("option");
-      for (var i = 0; i < $options.length; ++i) {
-        let selected = $options[i].getAttribute("ref") === current.href;
-        if (selected) {
-          $options[i].setAttribute("selected", "");
-        }
-      }
-    }
+      var catalogitem = '';
+      toc.forEach(function (chapter: NavItem) {
+        catalogitem += '<p class="catalog-item" data-catalog="' + chapter.href + '">' + chapter.label + '</p>';
+        return "";
+      });
 
-  }); */
+      // 将拼接好的目录渲染到页面里       
+      document.querySelector('#catalog').innerHTML = catalogitem
+
+      // 方式二 将所有的目录全部显示出来
+      // 第一级的catalog-item-0
+      // 第二级的catalog-item-1 以此类推...
+      document.querySelector('#catalog').innerHTML = recursionHandle(toc.toc, [], 0).join('')
+
+      // 点击跳转
+      jQuery('.catalog-item').on('click', function () {
+        // 当点击报错的时候，请看下面  杂项-目录跳转报错
+        var url = jQuery(this).attr("data-catalog");
+        console.log(url);
+        rendition.display(url);
+      });
+    })
+
+
+
+
+
+  });
 
   rendition.on("relocated", function (location: { atEnd: any; atStart: any; }) {
     console.log(location);
