@@ -8,3 +8,4 @@ windows 平台适用的 Epub阅读器软件。
 
 让代码开源，造福更多人。
 
+![image](https://user-images.githubusercontent.com/278153/117530254-aa697200-b00e-11eb-8994-4c9075917fda.png)
