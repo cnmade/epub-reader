@@ -2230,6 +2230,11 @@ electron-installer-redhat@^3.2.0:
     word-wrap "^1.2.3"
     yargs "^16.0.2"
 
+electron-log@^4.3.5:
+  version "4.3.5"
+  resolved "https://registry.nlark.com/electron-log/download/electron-log-4.3.5.tgz#2aad5f93842b9b5214a1b4a10e47b5ac5c9ec104"
+  integrity sha1-Kq1fk4Qrm1IUobShDke1rFyewQQ=
+
 electron-notarize@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/electron-notarize/download/electron-notarize-1.0.0.tgz#bc925b1ccc3f79e58e029e8c4706572b01a9fd8f"

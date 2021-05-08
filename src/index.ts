@@ -1,10 +1,15 @@
-import { app, BrowserWindow } from 'electron';
+import { app, ipcMain, BrowserWindow, remote, Remote } from 'electron';
+import log from 'electron-log';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
+let deeplinkingUrl: string = process.argv.length > 1 ?  process.argv[1] : "";
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
   app.quit();
 }
+
+log.info("main process: process argv:" + JSON.stringify(process.argv));
+
 
 const createWindow = (): void => {
   // Create the browser window.
@@ -22,11 +27,22 @@ const createWindow = (): void => {
 
   mainWindow.removeMenu();
   // and load the index.html of the app.
-  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY + "?args=" + deeplinkingUrl);
 
   // Open the DevTools.
- // mainWindow.webContents.openDevTools();
+  //mainWindow.webContents.openDevTools();
 };
+
+
+
+//退出
+
+ipcMain.on('close-me', (evt, arg) => {
+  app.quit()
+})
+
+//停用GPU 加速
+app.disableHardwareAcceleration();
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -49,6 +65,19 @@ app.on('activate', () => {
     createWindow();
   }
 });
+app.on('second-instance', (e, argv) => {
+  log.info("on second-instance");
+  if (process.platform !== 'darwin') {
+    // Find the arg that is our custom protocol url and store it
+    deeplinkingUrl = argv.find((arg) => arg.startsWith('custom://'));
+    log.info("deeplinkingUrl:" + deeplinkingUrl)
+  
+    remote.getCurrentWindow().loadURL(MAIN_WINDOW_WEBPACK_ENTRY + "?args=" + deeplinkingUrl);
+  }
+
+});
+
+
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
