@@ -16,15 +16,16 @@ const createWindow = (): void => {
       devTools:true,//是否开启 DevTools
        webSecurity: false//是否禁用同源策略(上线删除)
     },
-    height: 800,
+    height: 860,
     width: 1200,
   });
 
+  mainWindow.removeMenu();
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+ // mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished

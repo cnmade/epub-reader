@@ -29,7 +29,7 @@
 import './index.css';
 
 console.log('👋 This message is being logged by "renderer.js", included via webpack');
-import ePub from 'epubjs';
+import ePub, { Rendition } from 'epubjs';
 
 
 
@@ -44,12 +44,21 @@ import ePub from 'epubjs';
     var book = ePub("file:///./rust.epub");
     var rendition = book.renderTo("viewer", {
       width: "100%",
-      height: 600,
+      height: 800,
       spread: "always"
     });
 
     rendition.display(undefined);
+    
+
+
+
+
+    
     book.ready.then(() => {
+
+
+        window.addEventListener("resize", () => rendition.resize(window.innerWidth, window.innerHeight));
 
       var next = document.getElementById("next");
 
@@ -137,5 +146,3 @@ import ePub from 'epubjs';
     });
 
     
-
-        
