@@ -29,3 +29,8 @@
 import './index.css';
 
 console.log('👋 This message is being logged by "renderer.js", included via webpack');
+import ePub from 'epubjs';
+
+var book = ePub("file:///./rust.epub");
+var rendition = book.renderTo("reader-container", {width: 600, height: 400});
+var displayed = rendition.display();
