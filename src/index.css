@@ -114,6 +114,9 @@ body {
   overflow: auto;
 }
 
+.catalog-item {
+  cursor: pointer;
+}
 .catalog-item-0 {
   font-weight: 1000;
 }
