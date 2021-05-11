@@ -1,5 +1,11 @@
 # Epub 阅读器
 
+
+Buy me a cup of coffee for $3
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/M4M54KKIF)
+
+
 windows 平台适用的 Epub阅读器软件。 
 
 本项目代码开源，采用AGPL 3.0协议 发布源代码。
