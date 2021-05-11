@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  background: #fafafa;
+  background: white;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #333;
 
@@ -27,8 +27,8 @@ body {
 #viewer.spreads {
   width: 100%;
   /*height: 100vh;*/
-  box-shadow: 0 0 4px #ccc;
-  border-radius: 5px;
+  /* box-shadow: 0 0 4px #ccc; */
+  /*border-radius: 5px; */
   padding: 0;
   position: relative;
   margin: 0px auto;
@@ -50,7 +50,7 @@ body {
 
 #viewer.scrolled .epub-container {
   background: white;
-  box-shadow: 0 0 4px #ccc;
+  /*box-shadow: 0 0 4px #ccc;*/
   margin: 10px;
   padding: 20px;
 }
@@ -76,14 +76,14 @@ body {
   #viewer.spreads:after {
     position: absolute;
     width: 1px;
-    border-right: 1px #000 solid;
+   /* border-right: 1px #000 solid;*/
     /*height: 90%;*/
     z-index: 1;
     left: 50%;
     margin-left: -1px;
   
     opacity: .15;
-    box-shadow: -2px 0 15px rgba(0, 0, 0, 1);
+    /*box-shadow: -2px 0 15px rgba(0, 0, 0, 1); */
     content:  "";
   }
 
@@ -102,16 +102,20 @@ body {
 
 
 #catalog {
-  background-color: #CFE;
+  background-color: white;
   position: absolute;
   float: left;
   left: 0;
   top: 0;
   z-index: 1;
-  padding: 10px auto;
-  width: 20px;
-  height: 20px;
+  width: 300px;
+  height: 820px;
+  display:none;
   overflow: auto;
+  padding: 0px;
+}
+.catalog-item {
+  cursor: pointer;
 }
 
 .catalog-item-0 {
@@ -137,11 +141,31 @@ body {
   margin-left:10px;
 }
 
+
 .arrow {
   position: fixed;
   top: 50%;
   margin-top: -32px;
   font-size: 64px;
+  color: #E2E2E2;
+  opacity: 0.618;
+  font-family: arial, sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  text-decoration: none;
+}
+
+.arrow_toc {
+  opacity: 0.38;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  padding: 0px;
+  margin: 0px;
+  font-size: 20px;
   color: #E2E2E2;
   font-family: arial, sans-serif;
   font-weight: bold;
@@ -151,6 +175,7 @@ body {
   user-select: none;
   text-decoration: none;
 }
+
 
 .navlink {
   margin: 14px;
@@ -182,10 +207,10 @@ body {
 #book-viewer {
   width: 480px;
  /* height: 100vh;*/
-  margin: 0px auto;
+  margin: 0px auto;/* 
   -moz-box-shadow:      inset 10px 0 20px rgba(0,0,0,.1);
   -webkit-box-shadow:   inset 10px 0 20px rgba(0,0,0,.1);
-  box-shadow:           inset 10px 0 20px rgba(0,0,0,.1);
+  box-shadow:           inset 10px 0 20px rgba(0,0,0,.1); */
 }
 
 #book-viewer iframe {
@@ -212,8 +237,8 @@ body {
   position: absolute;
   overflow: auto;
   top: 0;
-  left: 0;
-  background: #777;
+  left: 0;/* 
+  background: #777; */
   -webkit-transition: -webkit-transform .25s ease-out;
   -moz-transition: -moz-transform .25s ease-out;
   -ms-transition: -moz-transform .25s ease-out;
@@ -235,8 +260,8 @@ body {
 
 #navigation h2 {
   font-size: 14px;
-  font-weight: normal;
-  color: #B0B0B0;
+  /* font-weight: normal;
+  color: #B0B0B0; */
   margin-bottom: 20px;
 }
 

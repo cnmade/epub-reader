@@ -88,13 +88,15 @@ if (sm == "") {
 
   //菜单
 
-  var tocDiv = document.getElementById("catalog");
-  tocDiv.addEventListener("mouseenter", () => {
-    jQuery("#catalog").width("300").height("800").css("overflow", "auto");
+  var tocArrow = document.getElementById("arrow_toc");
+  tocArrow.addEventListener("mouseenter", () => {
+    jQuery("#catalog").css("display", "block").css("overflow", "auto");
 
   });
+
+  var tocDiv = document.getElementById("catalog");
   tocDiv.addEventListener("mouseleave", () => {
-    jQuery("#catalog").width("25").height("25").css("overflow", "hidden");
+    jQuery("#catalog").css("display", "none").css("overflow", "hidden");
   });
 
   book.ready.then(() => {
@@ -158,13 +160,13 @@ if (sm == "") {
       // 方式一 toc是一个多维数组，下面这种只能显示第一级的目录
 
       var catalogitem = '';
-      toc.forEach(function (chapter: NavItem) {
+      /* toc.forEach(function (chapter: NavItem) {
         catalogitem += '<p class="catalog-item" data-catalog="' + chapter.href + '">' + chapter.label + '</p>';
         return "";
       });
 
       // 将拼接好的目录渲染到页面里       
-      document.querySelector('#catalog').innerHTML = catalogitem
+      document.querySelector('#catalog').innerHTML = catalogitem */
 
       // 方式二 将所有的目录全部显示出来
       // 第一级的catalog-item-0

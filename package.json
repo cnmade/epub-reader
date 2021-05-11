@@ -1,7 +1,7 @@
 {
   "name": "epub-reader",
   "productName": "epub-reader",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "My Electron application description",
   "main": ".webpack/main",
   "scripts": {
