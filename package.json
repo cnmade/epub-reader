@@ -9,6 +9,9 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
+    "package-win": "electron-forge package  --arch=ia32 --platform=win32",
+    "make-win": "electron-forge make  --arch=ia32 --platform=win32",
+    "publish-win": "electron-forge publish  --arch=ia32 --platform=win32",
     "lint": "eslint --ext .ts ."
   },
   "keywords": [],
