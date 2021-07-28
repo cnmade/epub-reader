@@ -149,8 +149,7 @@ if (sm == "") {
 
         return doc
     };
-
-    rendition.on("rendered", function (rendition: Rendition, iframe: Window, section: { href: string; }) {
+    rendition.on("rendered", function (rendition: Rendition, iframe: Window, ) {
 
         //绑定滚动事件
         iframe.document.addEventListener('wheel', (event: WheelEvent) => {
@@ -164,6 +163,9 @@ if (sm == "") {
                 document.getElementById("prev").click();
             }
         });
+    });
+    rendition.on("rendered", function (section: { href: string; }) {
+
 
         const current = book.navigation && book.navigation.get(section.href);
         book.loaded.navigation.then(function (toc) {
