@@ -26,7 +26,6 @@
  * ```
  */
 
-import '../dist/index.css';
 
 import jQuery from 'jquery';
 import ePub, {NavItem, Rendition} from 'epubjs';
