@@ -17,6 +17,14 @@ windows 平台适用的 Epub阅读器软件。
 ![image](https://user-images.githubusercontent.com/278153/117530254-aa697200-b00e-11eb-8994-4c9075917fda.png)
 
 
+## 开发环境
+
+
+```bash
+yarn install
+electron-builder -w
+```
+
 
 ## License
 
