@@ -26,7 +26,7 @@
  * ```
  */
 
-import './index.css';
+import '../dist/index.css';
 
 import jQuery from 'jquery';
 import ePub, {NavItem, Rendition} from 'epubjs';
@@ -63,7 +63,8 @@ console.log("args:" + JSON.stringify(sm));
 
 if (sm == "" || sm == ".") {
     //dev
-    sm = "file:///./rust.epub";
+   // sm = "file:///./rust.epub";
+    sm = "file:///../bft.epub";
     //prod
     // sm = "";
 }
@@ -151,6 +152,7 @@ if (sm == "") {
     };
     rendition.on("rendered", function (rendition: Rendition, iframe: Window, ) {
 
+
         //绑定滚动事件
         iframe.document.addEventListener('wheel', (event: WheelEvent) => {
             console.log("mouse wheel:", event.deltaY);
@@ -165,6 +167,10 @@ if (sm == "") {
         });
     });
     rendition.on("rendered", function (section: { href: string; }) {
+
+
+
+        rendition.themes.default({ "p": { "font-family": "crjk !important"}});
 
 
         const current = book.navigation && book.navigation.get(section.href);
