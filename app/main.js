@@ -1,4 +1,6 @@
 const {app, BrowserWindow, ipcMain, remote} = require('electron');
+const url = require("url");
+const path = require("path");
 
 
 let deeplinkingUrl = process.argv.length > 1 ? process.argv[1] : "";
@@ -6,7 +8,7 @@ let deeplinkingUrl = process.argv.length > 1 ? process.argv[1] : "";
 
 
 
-let MAIN_WINDOW_WEBPACK_ENTRY = "file:///./dist/index.html";
+let MAIN_WINDOW_WEBPACK_ENTRY = "./index.html";
 
 const createWindow = ()  => {
     // Create the browser window.
@@ -24,10 +26,18 @@ const createWindow = ()  => {
 
     mainWindow.removeMenu();
     // and load the index.html of the app.
-    mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY + "?args=" + deeplinkingUrl);
+   // mainWindow.loadFile(MAIN_WINDOW_WEBPACK_ENTRY + "?args=" + deeplinkingUrl);
 
+    mainWindow.loadURL(url.format({
+        pathname: path.join(__dirname, 'index.html'),
+        protocol: 'file:',
+        slashes: true,
+        query: {
+            args: deeplinkingUrl
+        }
+    }));
     // Open the DevTools.
- //   mainWindow.webContents.openDevTools();
+   mainWindow.webContents.openDevTools();
 };
 
 

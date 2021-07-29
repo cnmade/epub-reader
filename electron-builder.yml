@@ -1,16 +1,17 @@
-asar: true
+asar: false
 
 
 files:
-  - "dist/assets/*.ttf"
-  - "dist/bundle.js"
-  - "dist/index.css"
-  - "dist/index.html"
-  - "dist/jquery.min.js"
-  - "dist/epub.min.js"
-  - "dist/jszip.min.js"
-  - "main.js"
-  - "package.json"
+  - "./app/assets/crjk.ttf"
+  - "./app/assets/pxzs.ttf"
+  - "./app/bundle.js"
+  - "./app/index.css"
+  - "./app/index.html"
+  - "./app/jquery.min.js"
+  - "./app/epub.min.js"
+  - "./app/jszip.min.js"
+  - "./app/main.js"
+  - "./package.json"
 
 win:
   target:
@@ -24,3 +25,8 @@ nsis:
 directories:
   buildResources: "resources"
   output: "release"
+
+publish: null
+
+fileAssociations:
+  ext: epub

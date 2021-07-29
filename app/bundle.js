@@ -46,6 +46,11 @@ if (sm == "" || sm == ".") {
     window.alert("请打开一个epub文件");
    // ipcRenderer.send('close-me');
 } else {
+
+    if (sm.indexOf("file:///") < 0) {
+        sm = "file:///" + decodeURI(sm);
+    }
+
     document.getElementById("viewer").innerHTML = "";
     const book = ePub(sm);
     const rendition = book.renderTo("viewer", {
