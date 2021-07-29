@@ -34,7 +34,7 @@ console.log("args:" + JSON.stringify(sm));
 if (sm == "" || sm == ".") {
     //dev
     // sm = "file:///./rust.epub";
-    sm = "file:///../bft.epub";
+   // sm = "file:///../bft.epub";
     //prod
     // sm = "";
 }
@@ -42,10 +42,11 @@ if (sm == "" || sm == ".") {
 console.log(sm);
 
 // Load the opf
-if (sm == "") {
+if (sm == "" || sm == ".") {
     window.alert("请打开一个epub文件");
-    ipcRenderer.send('close-me');
+   // ipcRenderer.send('close-me');
 } else {
+    document.getElementById("viewer").innerHTML = "";
     const book = ePub(sm);
     const rendition = book.renderTo("viewer", {
         width: "100%",

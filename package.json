@@ -5,15 +5,8 @@
   "description": "BSMI epub reader",
   "main": "./main.js",
   "scripts": {
-    "start": "webpack-cli  --mode=development serve",
-    "package": "electron-forge package",
-    "build:dev": "webpack-cli --mode=development build",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish",
-    "package-win": "electron-forge package  --arch=ia32 --platform=win32",
-    "make-win": "electron-forge make  --arch=ia32 --platform=win32",
-    "publish-win": "electron-forge publish  --arch=ia32 --platform=win32",
-    "lint": "eslint --ext .ts ."
+    "start": "electron .",
+    "build": "electron-builder -w"
   },
   "keywords": [],
   "author": {
@@ -22,6 +15,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "electron": "13.1.7"
+    "electron": "13.1.7",
+    "electron-builder": "^22.11.7"
   }
 }

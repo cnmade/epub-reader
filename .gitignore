@@ -90,3 +90,4 @@ out/
 .idea/
 *.iml
 .yarn/
+release/

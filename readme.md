@@ -21,7 +21,8 @@ windows 平台适用的 Epub阅读器软件。
 
 
 ```bash
-yarn global add webpack-cli
+yarn install
+electron-builder -w
 ```
 
 

@@ -1,0 +1,26 @@
+asar: true
+
+
+files:
+  - "dist/assets/*.ttf"
+  - "dist/bundle.js"
+  - "dist/index.css"
+  - "dist/index.html"
+  - "dist/jquery.min.js"
+  - "dist/epub.min.js"
+  - "dist/jszip.min.js"
+  - "main.js"
+  - "package.json"
+
+win:
+  target:
+    - target: nsis
+      arch:
+        - ia32
+
+nsis:
+  oneClick: false
+
+directories:
+  buildResources: "resources"
+  output: "release"
