@@ -28,6 +28,16 @@ function transformToAssocArray(prmstr) {
     return params;
 }
 
+//保存书签
+saveBookMark = function () {
+    let cloc = rendition.currentLocation();
+    console.log(cloc);
+    const bmc = cloc.start.cfi;
+    console.log("书签位置为:" + bmc);
+    // I could save the location here
+};
+
+
 function sharedDoOpenBook() {
 
     document.getElementById("viewer").innerHTML = "";
@@ -84,12 +94,16 @@ function sharedDoOpenBook() {
         next.addEventListener("click", function (e) {
             rendition.next();
             e.preventDefault();
+            //加书签
+            saveBookMark();
         }, false);
 
         const prev = document.getElementById("prev");
         prev.addEventListener("click", function (e) {
             rendition.prev();
             e.preventDefault();
+            //加书签
+            saveBookMark();
         }, false);
 
         const keyListener = function (e) {
@@ -172,7 +186,9 @@ function sharedDoOpenBook() {
                 // 当点击报错的时候，请看下面  杂项-目录跳转报错
                 const url = jQuery(this).attr("data-catalog");
                 console.log(url);
-                rendition.display(url);
+                rendition.display(url).then(() => {
+                    saveBookMark();
+                });
             });
 
 
