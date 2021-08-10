@@ -1,6 +1,10 @@
 const {app, BrowserWindow, ipcMain, remote} = require('electron');
 const url = require("url");
 const path = require("path");
+const ElectronStore = require('electron-store');
+
+const confStore = new ElectronStore();
+
 
 
 let deeplinkingUrl = process.argv.length > 1 ? process.argv[1] : "";
@@ -37,7 +41,7 @@ const createWindow = ()  => {
         }
     }));
     //TODO: Open the DevTools.
-   mainWindow.webContents.openDevTools();
+   //mainWindow.webContents.openDevTools();
 
     //同步window title
     mainWindow.on('page-title-updated', (e, title) => {
@@ -53,6 +57,20 @@ const createWindow = ()  => {
 ipcMain.on('close-me', (evt, arg) => {
     app.quit()
 })
+
+//配置读取
+
+ipcMain.on("conf-get", (e, data) => {
+
+    e.returnValue = confStore.get(data);
+});
+
+//配置保存
+
+ipcMain.on("conf-save", (e, data) => {
+    confStore.set(data.key, data.val);
+    e.returnValue = "ok";
+});
 
 //停用GPU 加速
 app.disableHardwareAcceleration();

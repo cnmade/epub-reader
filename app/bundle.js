@@ -1,5 +1,6 @@
 const {ipcRenderer} = require('electron');
 
+
 jQuery.noConflict();
 
 //定义book 常量
@@ -7,9 +8,7 @@ let book = ePub();
 
 let rendition;
 
-
-console.log('👋 This message is being logged by "renderer.js", included via webpack');
-
+let bookmark_key = "";
 
 function getSearchParameters() {
     const prmstr = window.location.search.substr(1);
@@ -29,14 +28,38 @@ function transformToAssocArray(prmstr) {
 }
 
 //保存书签
-saveBookMark = function () {
-    let cloc = rendition.currentLocation();
-    console.log(cloc);
-    const bmc = cloc.start.cfi;
-    console.log("书签位置为:" + bmc);
+function  saveBookMark() {
+    let currentCfi = rendition.currentLocation()
+    console.log('当前章节:', rendition.get)
+    currentCfi = currentCfi.start.cfi
+    let currentContents = rendition.getContents()
+    console.log("currentContents+", currentContents);
+    let characterText = currentContents[0].content.innerText;
+    currentContents = characterText.substr(0, characterText.indexOf("\n", 0) > 0 ? characterText.indexOf("\n", 0): 32);
+
+    let d = new Date();
+    let ts = d.toLocaleString();
+
+    let currentBookmark = {cfi: currentCfi, title: currentContents, ts: ts }
+    console.log("书签key: ", bookmark_key, "书签为:", currentBookmark);
+    ipcRenderer.sendSync("conf-save", {
+        key: bookmark_key,
+        val: currentBookmark
+    })
+    //加载书签
+    loadBookMark();
     // I could save the location here
 };
+//加载书签
+function loadBookMark() {
+    let resp = ipcRenderer.sendSync("conf-get", bookmark_key);
+    console.log("获得的书签位置: ", resp);
 
+    jQuery("#bookmark-cc-box").html("<a href=\"javascript:goToBookmark('" + resp.cfi +"');\">" + resp.title + "</a><br /> " + resp.ts);
+}
+function goToBookmark(cfi) {
+    rendition.display(cfi);
+}
 
 function sharedDoOpenBook() {
 
@@ -78,8 +101,13 @@ function sharedDoOpenBook() {
 
     book.loaded.metadata.then(function(meta){
         //ipcRenderer.send('page-title-updated', meta.title);
+        console.log("metadata: " , meta);
         console.log("书名：" + meta.title+" – 作者: " + meta.creator);
         document.title = meta.title;
+        bookmark_key = encodeURI(meta.title + '-' + meta.creator);
+        //进来就加载书签
+        loadBookMark();
+
     });
 
     book.ready.then(() => {
