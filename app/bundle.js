@@ -43,16 +43,27 @@ function sharedDoOpenBook() {
 
     //菜单
 
-    const tocArrow = document.getElementById("arrow_toc");
-    tocArrow.addEventListener("mouseenter", () => {
-        jQuery("#catalog").css("display", "block").css("overflow", "auto");
+    jQuery("#arrow_toc").mouseenter(() =>{
+        jQuery("#catalog")
+            .css("display", "block")
+            .css("overflow", "auto")
+            .mouseleave(() => {
+                jQuery("#catalog").css("display", "none");
+            });
+    })
 
+
+    //书签
+
+    jQuery("#bookmark").mouseenter(() => {
+        jQuery("#bookmark-cc")
+            .css("display", "block")
+            .css("overflow", "auto")
+            .mouseleave(() =>{
+                jQuery("#bookmark-cc").css("display", "none");
+            });
     });
 
-    const tocDiv = document.getElementById("catalog");
-    tocDiv.addEventListener("mouseleave", () => {
-        jQuery("#catalog").css("display", "none").css("overflow", "hidden");
-    });
 
 
     book.loaded.metadata.then(function(meta){

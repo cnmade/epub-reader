@@ -145,6 +145,21 @@ body {
 }
 
 
+#bookmark-cc {
+  background-color: white;
+  position: absolute;
+  float: left;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  width: 300px;
+  height: 820px;
+  display:none;
+  overflow: auto;
+  padding: 0px;
+}
+
+
 .arrow {
   position: fixed;
   top: 50%;
@@ -168,7 +183,7 @@ body {
   left: 10px;
   padding: 0px;
   margin: 0px;
-  font-size: 20px;
+  font-size: 16px;
   color: #E2E2E2;
   font-family: arial, sans-serif;
   font-weight: bold;
@@ -178,7 +193,9 @@ body {
   user-select: none;
   text-decoration: none;
 }
-
+.arrow_toc > a {
+  text-decoration: none;
+}
 
 .navlink {
   margin: 14px;
