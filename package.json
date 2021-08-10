@@ -11,9 +11,9 @@
   "keywords": [],
   "author": {
     "name": "ZhiFeng hu",
-    "email": "huzhifeng@coldlake.cn"
+    "email": "278153+cnmade@users.noreply.github.com"
   },
-  "license": "MIT",
+  "license": "AGPL-3.0",
   "devDependencies": {
     "electron": "13.1.9",
     "electron-builder": "^22.11.11"
