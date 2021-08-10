@@ -36,8 +36,15 @@ const createWindow = ()  => {
             args: deeplinkingUrl
         }
     }));
-    // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+    //TODO: Open the DevTools.
+   mainWindow.webContents.openDevTools();
+
+    //同步window title
+    mainWindow.on('page-title-updated', (e, title) => {
+        e.preventDefault();
+        mainWindow.setTitle(title);
+    });
+
 };
 
 
@@ -63,6 +70,7 @@ app.on('window-all-closed', () => {
         app.quit();
     }
 });
+
 
 app.on('activate', () => {
     // On OS X it's common to re-create a window in the app when the

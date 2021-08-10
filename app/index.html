@@ -1,27 +1,34 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="UTF-8">
     <title>Epub Reader</title>
-    <link rel="stylesheet" href="index.css" />
-    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <link rel="stylesheet" href="index.css"/>
+    <script>
+        if (typeof module === 'object') {
+            window.module = module;
+            module = undefined;
+        }
+    </script>
 
-    <script  src="jquery.min.js"></script>
-    <script  src="jszip.min.js"></script>
+    <script src="jquery.min.js"></script>
+    <script src="jszip.min.js"></script>
 
     <script>
-      jQuery.noConflict();
+        jQuery.noConflict();
     </script>
-    <script  src="epub.min.js"></script>
-  </head>
-  <body>
-    <div id="catalog"></div>
-<div id="viewer" class="spreads">选中.epub格式电子书，鼠标右键，选择用epub reader打开</div>
+    <script src="epub.min.js"></script>
+</head>
+<body>
+<div id="catalog"></div>
+<div id="viewer" class="spreads">选中.epub格式电子书，鼠标右键，选择用epub reader打开
+    <p><input type="file" id="ebook-selector"></p>
+</div>
 
 <a id="prev" href="#prev" class="arrow">‹</a>
 <a id="next" href="#next" class="arrow">›</a>
 
 <a id="arrow_toc" href="#arrow_toc" class="arrow_toc">📖</a>
-  <script  src="bundle.js"></script>
-  </body>
+<script src="bundle.js"></script>
+</body>
 </html>

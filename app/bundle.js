@@ -1,11 +1,14 @@
-
-
 const {ipcRenderer} = require('electron');
 
 jQuery.noConflict();
 
-console.log('👋 This message is being logged by "renderer.js", included via webpack');
+//定义book 常量
+let book = ePub();
 
+let rendition;
+
+
+console.log('👋 This message is being logged by "renderer.js", included via webpack');
 
 
 function getSearchParameters() {
@@ -25,35 +28,11 @@ function transformToAssocArray(prmstr) {
     return params;
 }
 
-const params = getSearchParameters();
-
-
-let sm = params.get("args");
-console.log("args:" + JSON.stringify(sm));
-
-if (sm == "" || sm == ".") {
-    //dev
-    // sm = "file:///./rust.epub";
-   // sm = "file:///../bft.epub";
-    //prod
-    // sm = "";
-}
-
-console.log(sm);
-
-// Load the opf
-if (sm == "" || sm == ".") {
-    window.alert("请打开一个epub文件");
-   // ipcRenderer.send('close-me');
-} else {
-
-    if (sm.indexOf("file:///") < 0) {
-        sm = "file:///" + decodeURI(sm);
-    }
+function sharedDoOpenBook() {
 
     document.getElementById("viewer").innerHTML = "";
-    const book = ePub(sm);
-    const rendition = book.renderTo("viewer", {
+
+    rendition = book.renderTo("viewer", {
         width: "100%",
         height: 800,
         spread: "always"
@@ -75,7 +54,16 @@ if (sm == "" || sm == ".") {
         jQuery("#catalog").css("display", "none").css("overflow", "hidden");
     });
 
+
+    book.loaded.metadata.then(function(meta){
+        //ipcRenderer.send('page-title-updated', meta.title);
+        console.log("书名：" + meta.title+" – 作者: " + meta.creator);
+        document.title = meta.title;
+    });
+
     book.ready.then(() => {
+
+
 
 
         window.addEventListener("resize", () => rendition.resize(window.innerWidth, window.innerHeight));
@@ -127,7 +115,7 @@ if (sm == "" || sm == ".") {
 
         return doc
     };
-    rendition.on("rendered", function (rendition, iframe ) {
+    rendition.on("rendered", function (rendition, iframe) {
 
 
         //绑定滚动事件
@@ -146,8 +134,7 @@ if (sm == "" || sm == ".") {
     rendition.on("rendered", function (section) {
 
 
-
-        rendition.themes.default({ "p": { "font-family": "crjk !important"}});
+        rendition.themes.default({"p": {"font-family": "crjk !important"}});
 
 
         const current = book.navigation && book.navigation.get(section.href);
@@ -212,6 +199,57 @@ if (sm == "" || sm == ".") {
             viewer.classList.add('single');
         }
     });
+}
+
+//打开一本电子书
+function doOpenBook(e) {
+
+    var bookData = e.target.result;
+
+    book.open(bookData)
+    sharedDoOpenBook();
+}
+
+
+const params = getSearchParameters();
+
+
+let sm = params.get("args");
+console.log("args:" + JSON.stringify(sm));
+
+if (sm == "" || sm == ".") {
+    //dev
+    // sm = "file:///./rust.epub";
+    // sm = "file:///../bft.epub";
+    //prod
+    // sm = "";
+
+}
+
+console.log(sm);
+
+// Load the opf
+if (sm == "" || sm == ".") {
+    // window.alert("请打开一个epub文件");
+    // ipcRenderer.send('close-me');
+    var inputElement = document.getElementById("ebook-selector");
+
+    inputElement.addEventListener('change', function (e) {
+        var file = e.target.files[0];
+        if (window.FileReader) {
+            var reader = new FileReader();
+            reader.onload = doOpenBook;
+            reader.readAsArrayBuffer(file);
+        }
+    });
+} else {
+
+    if (sm.indexOf("file:///") < 0) {
+        sm = "file:///" + decodeURI(sm);
+    }
+
+    book.open(sm)
+    sharedDoOpenBook();
 
 
 }
