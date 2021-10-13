@@ -15,10 +15,10 @@
   },
   "license": "AGPL-3.0",
   "devDependencies": {
-    "electron": "13.1.9",
-    "electron-builder": "^22.11.11"
+    "electron": "15.1.2",
+    "electron-builder": "^22.13.1"
   },
   "dependencies": {
-    "electron-store": "^8.0.0"
+    "electron-store": "^8.0.1"
   }
 }
