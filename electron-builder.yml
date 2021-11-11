@@ -13,6 +13,10 @@ files:
   - "./app/main.js"
   - "./package.json"
 
+mac:
+  target: 
+   - target: dmg
+
 win:
   target:
     - target: nsis
