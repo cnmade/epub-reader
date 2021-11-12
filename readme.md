@@ -23,6 +23,8 @@ windows 平台适用的 Epub阅读器软件。
 ```bash
 yarn install
 electron-builder -w
+# 如果是Mac
+electron-builder -m
 ```
 
 
