@@ -17,7 +17,23 @@ let deeplinkingUrl = process.argv.length > 1 ? process.argv[1] : "";
 
 let MAIN_WINDOW_WEBPACK_ENTRY = "./index.html";
 
-let mainWindow;
+let mainWindow = null;
+
+
+
+
+app.on("open-file", (e, path) => {
+    e.preventDefault();
+
+    if (isReady && mainWindow != null) {
+
+        mainWindow.webContents.send("open-the-book", path);
+    } else {
+        deeplinkingUrl = path;
+
+    }
+})
+
 
 const createWindow = () => {
     // Create the browser window.
@@ -48,12 +64,13 @@ const createWindow = () => {
         }
     }));
     //TODO: Open the DevTools.
-    mainWindow.webContents.openDevTools();
+    //  mainWindow.webContents.openDevTools();
 
     //同步window title
     mainWindow.on('page-title-updated', (e, title) => {
         e.preventDefault();
         mainWindow.setTitle(title);
+
     });
 
 
@@ -62,37 +79,21 @@ const createWindow = () => {
 
     mainWindow.on('closed', function () {
 
-        mainWindow = null;
-        isReady = false;
+
+        app.quit();
     });
 
 
 
-    app.on("open-file", (e, path) => {
-        e.preventDefault();
-
-        if (isReady) {
-            mainWindow.webContents.send("open-the-book", path);
-        } else {
-            deeplinkingUrl = path;
-            if (mainWindow == null) {
-
-                createWindow();
-            }
-        }
-    })
 
 };
-
 
 
 //退出
 
 ipcMain.on('close-me', (evt, arg) => {
 
-    if (process.platform !== 'darwin') {
-        app.quit()
-    }
+    app.quit();
 })
 
 //配置读取
@@ -123,9 +124,7 @@ app.on('ready', createWindow);
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-        app.quit();
-    }
+    app.quit();
 });
 
 
