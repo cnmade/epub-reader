@@ -1,22 +1,27 @@
-const {app, BrowserWindow, ipcMain, remote} = require('electron');
+const { app, BrowserWindow, ipcMain, remote, dialog } = require('electron');
 const url = require("url");
 const path = require("path");
 const ElectronStore = require('electron-store');
 
 const confStore = new ElectronStore();
 
+let isReady = false;
 
 
 let deeplinkingUrl = process.argv.length > 1 ? process.argv[1] : "";
+
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 
 
 
 let MAIN_WINDOW_WEBPACK_ENTRY = "./index.html";
 
-const createWindow = ()  => {
+let mainWindow;
+
+const createWindow = () => {
     // Create the browser window.
-    const mainWindow = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         webPreferences: {
             nodeIntegration: true,//是否启用节点集成
             nodeIntegrationInWorker: true,//是否在Web工作器中启用了Node集成
@@ -30,18 +35,20 @@ const createWindow = ()  => {
 
     mainWindow.removeMenu();
     // and load the index.html of the app.
-   // mainWindow.loadFile(MAIN_WINDOW_WEBPACK_ENTRY + "?args=" + deeplinkingUrl);
+    // mainWindow.loadFile(MAIN_WINDOW_WEBPACK_ENTRY + "?args=" + deeplinkingUrl);
+
 
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, 'index.html'),
         protocol: 'file:',
         slashes: true,
         query: {
-            args: deeplinkingUrl
+            args: encodeURI(deeplinkingUrl),
+            isWin: process.platform !== 'darwin' ? 1 : 0
         }
     }));
     //TODO: Open the DevTools.
-   //mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
 
     //同步window title
     mainWindow.on('page-title-updated', (e, title) => {
@@ -49,13 +56,43 @@ const createWindow = ()  => {
         mainWindow.setTitle(title);
     });
 
+
+    isReady = true;
+
+
+    mainWindow.on('closed', function () {
+
+        mainWindow = null;
+        isReady = false;
+    });
+
+
+
+    app.on("open-file", (e, path) => {
+        e.preventDefault();
+
+        if (isReady) {
+            mainWindow.webContents.send("open-the-book", path);
+        } else {
+            deeplinkingUrl = path;
+            if (mainWindow == null) {
+
+                createWindow();
+            }
+        }
+    })
+
 };
+
 
 
 //退出
 
 ipcMain.on('close-me', (evt, arg) => {
-    app.quit()
+
+    if (process.platform !== 'darwin') {
+        app.quit()
+    }
 })
 
 //配置读取
@@ -79,6 +116,8 @@ app.disableHardwareAcceleration();
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow);
+
+
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits

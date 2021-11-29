@@ -726,7 +726,7 @@
     "conf" "^10.0.3"
     "type-fest" "^1.0.2"
 
-"electron@15.1.2":
+"electron@^15.1.2":
   "integrity" "sha512-cU5x1ZvhwcTtzClJrsxqbvCocs40uhuXcdXbXFMpe6XnbnjruTbwrB2V0OxN01pStDrYihnfKo2yhfEvhO3zmw=="
   "resolved" "https://registry.npmjs.org/electron/-/electron-15.1.2.tgz"
   "version" "15.1.2"

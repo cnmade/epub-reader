@@ -1,4 +1,4 @@
-const {ipcRenderer} = require('electron');
+const { ipcRenderer } = require('electron');
 
 
 jQuery.noConflict();
@@ -28,19 +28,19 @@ function transformToAssocArray(prmstr) {
 }
 
 //保存书签
-function  saveBookMark() {
+function saveBookMark() {
     let currentCfi = rendition.currentLocation()
     console.log('当前章节:', rendition.get)
     currentCfi = currentCfi.start.cfi
     let currentContents = rendition.getContents()
     console.log("currentContents+", currentContents);
     let characterText = currentContents[0].content.innerText;
-    currentContents = characterText.substr(0, characterText.indexOf("\n", 0) > 0 ? characterText.indexOf("\n", 0): 32);
+    currentContents = characterText.substr(0, characterText.indexOf("\n", 0) > 0 ? characterText.indexOf("\n", 0) : 32);
 
     let d = new Date();
     let ts = d.toLocaleString();
 
-    let currentBookmark = {cfi: currentCfi, title: currentContents, ts: ts }
+    let currentBookmark = { cfi: currentCfi, title: currentContents, ts: ts }
     console.log("书签key: ", bookmark_key, "书签为:", currentBookmark);
     ipcRenderer.sendSync("conf-save", {
         key: bookmark_key,
@@ -55,7 +55,7 @@ function loadBookMark() {
     let resp = ipcRenderer.sendSync("conf-get", bookmark_key);
     console.log("获得的书签位置: ", resp);
 
-    jQuery("#bookmark-cc-box").html("<a href=\"javascript:goToBookmark('" + resp.cfi +"');\">" + resp.title + "</a><br /> " + resp.ts);
+    jQuery("#bookmark-cc-box").html("<a href=\"javascript:goToBookmark('" + resp.cfi + "');\">" + resp.title + "</a><br /> " + resp.ts);
 }
 function goToBookmark(cfi) {
     rendition.display(cfi);
@@ -76,7 +76,7 @@ function sharedDoOpenBook() {
 
     //菜单
 
-    jQuery("#arrow_toc").mouseenter(() =>{
+    jQuery("#arrow_toc").mouseenter(() => {
         jQuery("#catalog")
             .css("display", "block")
             .css("overflow", "auto")
@@ -92,17 +92,17 @@ function sharedDoOpenBook() {
         jQuery("#bookmark-cc")
             .css("display", "block")
             .css("overflow", "auto")
-            .mouseleave(() =>{
+            .mouseleave(() => {
                 jQuery("#bookmark-cc").css("display", "none");
             });
     });
 
 
 
-    book.loaded.metadata.then(function(meta){
+    book.loaded.metadata.then(function (meta) {
         //ipcRenderer.send('page-title-updated', meta.title);
-        console.log("metadata: " , meta);
-        console.log("书名：" + meta.title+" – 作者: " + meta.creator);
+        console.log("metadata: ", meta);
+        console.log("书名：" + meta.title + " – 作者: " + meta.creator);
         document.title = meta.title;
         bookmark_key = encodeURI(meta.title + '-' + meta.creator);
         //进来就加载书签
@@ -187,7 +187,7 @@ function sharedDoOpenBook() {
     rendition.on("rendered", function (section) {
 
 
-        rendition.themes.default({"p": {"font-family": "crjk !important"}});
+        rendition.themes.default({ "p": { "font-family": "crjk !important" } });
 
 
         const current = book.navigation && book.navigation.get(section.href);
@@ -270,6 +270,7 @@ const params = getSearchParameters();
 
 
 let sm = params.get("args");
+let isWin = params.get("isWin");
 console.log("args:" + JSON.stringify(sm));
 
 if (sm == "" || sm == ".") {
@@ -283,6 +284,13 @@ if (sm == "" || sm == ".") {
 
 console.log(sm);
 
+ipcRenderer.on("open-the-book", (e, path) => {
+    console.log(" the book path: " + path);
+    path = "file://" + path;
+    console.log(" the book path now : " + path);
+    book.open(path);
+    sharedDoOpenBook();
+})
 // Load the opf
 if (sm == "" || sm == ".") {
     // window.alert("请打开一个epub文件");
@@ -299,8 +307,13 @@ if (sm == "" || sm == ".") {
     });
 } else {
 
-    if (sm.indexOf("file:///") < 0) {
-        sm = "file:///" + decodeURI(sm);
+    //TODO check is win Or mac
+    if (isWin == "1") {
+        if (sm.indexOf("file:///") < 0) {
+            sm = "file:///" + decodeURIComponent(sm);
+        }
+    } else {
+        sm = "file://" + decodeURIComponent(sm);
     }
 
     book.open(sm)

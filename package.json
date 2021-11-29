@@ -5,7 +5,7 @@
   "description": "BSMI epub reader",
   "main": "app/main.js",
   "scripts": {
-    "start": "electron .",
+    "start": "ELECTRON_ENABLE_LOGGING=true electron .",
     "build": "electron-builder -w"
   },
   "keywords": [],
@@ -15,7 +15,7 @@
   },
   "license": "AGPL-3.0",
   "devDependencies": {
-    "electron": "15.1.2",
+    "electron": "^15.1.2",
     "electron-builder": "^22.13.1"
   },
   "dependencies": {
