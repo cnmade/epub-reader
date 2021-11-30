@@ -18,12 +18,14 @@ windows 平台适用的 Epub阅读器软件。
 
 
 ## 开发环境
-
+您需要NodeJS 14+及以上来进行开发调试，请确保先安装nodejs工具链
 
 ```bash
-yarn install
+# 先安装依赖
+npm install 
+# 为windows 用户构建应用程序
 electron-builder -w
-# 如果是Mac
+# 为mac 用户构建应用程序
 electron-builder -m
 ```
 
