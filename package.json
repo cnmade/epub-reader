@@ -1,12 +1,12 @@
 {
   "name": "epub-reader",
   "productName": "epub-reader",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "BSMI epub reader",
   "main": "app/main.js",
   "scripts": {
     "start": "ELECTRON_ENABLE_LOGGING=true electron .",
-    "build": "electron-builder -w"
+    "build": "electron-builder -wm"
   },
   "keywords": [],
   "author": {
@@ -15,8 +15,8 @@
   },
   "license": "AGPL-3.0",
   "devDependencies": {
-    "electron": "^15.1.2",
-    "electron-builder": "^22.13.1"
+    "electron": "^17.0.1",
+    "electron-builder": "^23.0.0"
   },
   "dependencies": {
     "electron-store": "^8.0.1"
